@@ -23,7 +23,7 @@ SECRET_KEY = 'django-insecure-ldd%@#bd&cy@=47@+48u1lkz&ka+lil#7o)x)ku_g!j#!f13)1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.ap']
+ALLOWED_HOSTS = ['.vercel.app']
 
 # Email
 EMAIL_BACKEND= 'django.core.mail.backends.console.EmailBackend'
