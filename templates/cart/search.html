@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}
+Liste des produits - Abdallah Market
+{% endblock title %}
+
+
+{% block content %}
+<!--i-->
+<div class=" p-2 container foot">
+    <a href=" {% url 'product-list' %} " class="text-decoration-none text-dark">Accueil</a>
+    <span>/</span>
+    <strong class="">Shop</strong>
+</div>
+
+<div class="container mt-4 ">
+    <form action="" method="get"></form>
+    <div class="m-3 col-lg-5 col-sm-8 col-xl-10 mx-auto d-flex">
+            <input type="text" name="q" id="q" placeholder="Ex: Pantalon" class="form-control mt-1">
+            <button type="submit" class="btn btn-success btn-sm"> Rechercher</button>
+    </div>
+    </form>
+    <div class="row">
+        
+        {% if products.count >= 1 %}
+            {% for product in products %}
+            <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+                {% include 'cart/partials/product_item.html' %}
+            {% endfor %}
+        {% else %}
+                <h1 class="text-center container mx-auto m-5 w-75 rounded-lg-pill text-white rouge p-3">Pas de produits disponible.</h1>
+        {% endif %}
+            
+       
+    </div>
+</div>
+    {% endblock content %}

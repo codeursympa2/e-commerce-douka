@@ -1,0 +1,29 @@
+    {% load crispy_forms_tags %}
+    <div class="card shadow-md rouge mb-3" style="background-color: #991332;">
+        <!-- Card image -->
+        <div class="view view-cascade overlay">
+
+            <a href="{{ product.get_absolute_url }}">
+                <img class="card-img-top" width="90" height="200" src="{{ product.image.url }}" alt="Card image cap">
+            </a>
+           
+        </div>
+        <!-- Card content -->
+        <div class="card-body card-body-cascade" style="height:160px">
+
+            <h4 class="font-weight-bold card-title ">
+                <a href="{{ product.get_absolute_url }}" class="text-white">
+                    {{ product.title|truncatewords:1 }}
+                </a>
+            </h4>
+            <div class="float-right mt-5  text-warning h3-responsive">
+                {{product.price}} FCFA
+            </div>
+            <!-- Text -->
+            <p class="card-text text-white"><strong>{{ product.desc|truncatewords:3 }}</strong></p>
+            <!-- Button -->
+            
+           
+        </div>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %} Contact {% endblock %}
+{% block content %}
+
+
+{% include 'partials/barre.html' %}
+<div class="container mt-4 mx-auto">
+    <div class="row mx-auto">
+        <div class="col-md-4">
+            <H2 class="mb-3 text-black-50">Entrer en contact</H2>
+        </div>
+        <div class="col-md-8 ">
+            <form action="" method="post" novalidate>
+                {% csrf_token %}
+                {{ form|crispy }}
+                <input type="submit" value="Soumettre" class="btn  text-white"
+                    style="background-color: #991332;">
+
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

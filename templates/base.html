@@ -1,0 +1,187 @@
+{% load static %}
+{% load cart_template_tags %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} Douka Langou {% endblock %}</title>
+</head>
+<style>
+    .rouge{
+        background-color: #991332;
+    }
+    .foot{
+        background-color: #b6b2a0;
+    }
+    .ligne:hover{
+        background-color:#991332;
+        color: rgb(255, 255, 255);
+      }
+    .ligne1:hover{
+    background-color:#dbce13;
+    color: rgb(255, 255, 255);
+    }
+     
+    .alert-error{
+        background-color: #f80c43;
+        color: rgb(255, 255, 255);
+    }
+    
+</style>
+<body class="d-flex flex-column min-vh-100">
+
+    <!--Link-->
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <!-- Google Fonts Roboto -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <!-- Material Design Bootstrap -->
+    <link rel="stylesheet" href="{% static 'css/mdb.min.css' %}">
+    <!-- Your custom styles (optional) -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <script
+			  src="https://code.jquery.com/jquery-3.6.0.js"
+			  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+			  crossorigin="anonymous"></script>
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #b6b2a0;">
+        <!-- Container wrapper -->
+        <div class="container-fluid">
+            <!-- Toggle button -->
+            <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+                data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <!-- Collapsible wrapper -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- Navbar brand -->
+                <a class="navbar-brand mt-2 mt-lg-0  " href="{% url 'product-list' %}">
+                    Douka Langou
+                </a>
+
+
+            </div>
+            <div class="d-flex align-items-center">
+
+                <!-- Notifications -->
+                
+                {% if request.user.is_staff %}
+                <a class="text-reset m-1 me-3  hidden-arrow" href="{% url 'admin:index' %} " id="navbarDropdownMenuLink" >
+                    <i class="fas fa-user"></i> administration 
+                </a>|
+                {% endif %}
+                    
+                
+                {% if request.user.is_authenticated %}
+                   
+                    <a class="text-reset m-1 me-3  hidden-arrow" href="#" id="navbarDropdownMenuLink" >
+                        <i class="fas fa-user"></i> {{request.user.email}} 
+                    </a>|
+                    <a class="text-reset m-1 me-3  hidden-arrow" onclick="return confirm('Voulez vous vraiment vous déconnnecter ?')" href=" {% url 'logout' %} " id="navbarDropdownMenuLink" >
+                        <i class="fas fa-sign-out-alt"></i> Déconnexion
+                    </a>
+                {% else %}
+                    <a class="text-reset m-1 me-3  hidden-arrow" href=" {% url 'login' %} " id="navbarDropdownMenuLink" >
+                        <i class="fas fa-sign-in-alt"></i> Se connecter
+                    </a>
+                {% endif %}
+                    
+                
+                <!-- Icon -->
+                |<a class="text-reset me-3 m-1" href="{% url 'cart' %}">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="badge  rounded-pill badge-notification badge-sm bg-danger" >{{ request|cart_item_count }}</span>
+
+                </a>   
+            </div>
+            <!-- Right elements -->
+    </nav>
+    <!-- Navbar -->
+    <nav class="navbar mt-0 sticky-top navbar-expand-lg navbar-light " style="background-color: #991332;">
+        <!-- Container wrapper -->
+        <div class="container-fluid">
+            <!-- Toggle button -->
+            <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+                data-mdb-target="#navbarCenteredExample" aria-controls="navbarCenteredExample" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <!-- Collapsible wrapper -->
+            <div class="collapse navbar-collapse justify-content-center" id="navbarCenteredExample">
+                <!-- Left links -->
+                <ul class="navbar-nav mb-2 mb-lg-0 text-white">
+                  <!--  <li class="nav-item">
+                        <a class="nav-link active text-white" aria-current="page" href=" {% url 'home' %} ">Home</a>
+                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'product-list' %}">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link  text-white" href=" {% url 'contact' %} ">Contact</a>
+                    </li>
+                </ul>
+                <!-- Left links -->
+            </div>
+            <!-- Collapsible wrapper -->
+        </div>
+        <!-- Container wrapper -->
+    </nav>
+
+
+    {% if messages %}
+    {% for message in messages %}
+    <div {% if message.tags %} class="alert alert-{{ message.tags }} text-center h3 p-1 m-2 mx-auto col-6 rounded-3" {% endif %}>{{ message }}</div>
+    {% endfor %}
+    {% endif %}
+    <!--/.Navbar-->
+    <div class="mb-3"></div>
+    {% block content %}
+
+    {% endblock %}
+
+    
+    <!-- jQuery -->
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="{% static 'js/popper.min.js' %}"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static 'js/bootstrap.min.js '%}"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="{% static 'js/mdb.min.js '%}"></script>
+    <!-- Your custom scripts (optional) -->
+    <script type="text/javascript"> </script>
+
+   
+
+    <div class="mt-5"></div>
+    <footer class="site-footer border-top foot mt-auto" >
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-12 p-3">
+                    <p>
+                        Copyright &copy;
+                        <script>
+                            document.write(new Date().getFullYear());
+                        </script>
+                        tous droits réservés | ce site est fait avec
+                        <i class="fas fa-heart" style="color: #991332;"> </i>
+                        par<a class="text-decoration-none" style="color: #991332;" target="_blank" rel="noopener noreferrer"  
+                        href="https://www.facebook.com/anrichodine.abdallah">
+                            <strong>Abdallah Anrichidine</strong></a>  
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer -->
+</body>
+
+</html>

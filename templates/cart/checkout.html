@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Checkout{% endblock title %}
+
+{% block content %}
+<div class=" p-2 container foot">
+    <a href=" {% url 'product-list' %} " class="text-decoration-none text-dark">Accueil</a>
+    <span>/</span>
+    <a href=" {% url 'cart' %} " class="text-decoration-none text-dark">Cart</a>
+    <span>/</span>
+    <strong class=""> Checkout</strong>
+</div>
+<div class="container">
+    {% if not request.user.is_authenticated %}
+    <div class="row mb-5">
+        <div class="col-md-12">
+            <div class="border mb-1 p-4 m-3 shadow-sm rouge text-white text-center rounded" role="alert">
+                Vous êtes tout proche de finaliser vos achats, mais vous devez
+                absolument vous <a href="" class="text-decoration-none text-warning"> <strong>connecter</strong> </a> ou
+                <a href="" class="text-decoration-none text-warning"><strong>ouvrir un compte</strong>.</a>
+            </div>
+            <div class="progress m-3" style="height: 30px;">
+                <div class="progress-bar bg-success progress-bar-animated position-relative progress-bar-striped"
+                    role="progressbar" style="width:90%;" aria-label="99" aria-valuemin="0" aria-valuemax="1">
+                    <div class="h5 m-2">99% complet</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <form action="" method="post" novalidate>
+        {% csrf_token %}
+
+        <div class="row mt-3">
+            <div class="col-md-6 mb-md-0">
+                <h2 class="h3  mb-3 text-black text-center">
+                    Billing details
+                </h2>
+                <hr>
+                <div class="p-2 p-lg-2">
+                    {{form|crispy}}
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success btn-xl py-4 btn-block">
+                        Proced to payment
+                    </button>
+                </div>
+
+
+            </div>
+            <div class="col-md-6 ">
+                <div class="row mb-5">
+                    <div class="col-md-12">
+                        <h2 class="h3 mb-3 text-black text-center">Your order</h2>
+                        <hr>
+                        <div class="p-3 p-lg-3 mt-0">
+                            <table class="table table-responsive ">
+                                <thead>
+                                    <tr class="text-center text-black-50">
+                                        <th scope="col" class="col-lg-2 col-sm-12 col-md-8">Product</th>
+                                        <th scope="col" class="col-lg-2">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="ligne1">
+                                    {% for item in order_items %}
+                                    <div class="container">
+                                        <tr class="text-center  rouge text-white">
+                                            <td>
+                                               {{item.size.name}},{{item.colour.name}},{{item.product.title}}
+                                               <strong class="mx-2">x</strong>{{item.quantity}}
+                                            </td>
+                                            <td>
+                                                <div class="m-3  ">
+                                                    <strong> {{item.get_raw_total_item_price}}</strong> FCFA
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>
+                                                    Sous total:
+                                                </strong>
+                                            </td>
+                                            <td>
+                                                {{item.get_raw_total_item_price}} FCFA
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>
+                                                   Total:
+                                                </strong>
+                                            </td>
+                                            <td>
+                                                <strong class="text-primary font-weight-bold">
+                                                    {{item.get_raw_total_item_price}} FCFA
+                                                </strong>
+                                            </td>
+                                        </tr>
+                                    </div>
+
+                                    {% endfor %}
+                       
+                        </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+</form>
+{% endif %}
+</div>
+</div>
+
+{% endblock content %}

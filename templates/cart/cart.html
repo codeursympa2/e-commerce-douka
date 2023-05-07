@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block title %}
+Commande - Abdallah Supermarket
+{% endblock title %}
+
+{% block content %}
+
+<div class=" p-2 container foot">
+  <a href=" {% url 'product-list' %} " class="text-decoration-none text-dark">Accueil</a>
+  <span>/</span>
+  <strong class="">Cart</strong>
+</div>
+
+<div class="container">
+ 
+      {% if order_items.count >= 1 %}
+      <h5 class="container col-lg-6  mx-auto text-center m-4 rouge text-white p-3" style="border-radius: 30px;">Vous
+        avez <strong>{{ order_items.count }}</strong> {{ order_plural_single }} dans votre pagnier</h5>
+      <table class="table table-responsive ">
+        <thead>
+          <tr class="text-center rouge text-white-50">
+            <th scope="col"></th>
+            <th scope="col" class="col-lg-2 col-sm-12 col-md-8">Product</th>
+            <th class="col-lg-2" scope="col">Prix</th>
+            <th scope="col" class="">Quantité</th>
+            <th scope="col" class="col-lg-2">Totale</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          {% for item in order_items %}
+          <tr class="text-center ligne">
+            <th scope="row">
+              <img src=" {{ item.product.image.url }} " alt="" class="" style="border-radius: 10px;" width="90"
+                height="80">
+            </th>
+            <td>
+              <h5 class=" text-black-50">{{item.product.title|truncatewords:3}}</h5>
+              <small> Size: {{ item.size }}</small>
+              <small>Colour: {{ item.colour }}</small>
+            </td>
+            <td>
+              <div class="m-3 text-warning h5-responsive"> <strong>{{item.product.get_price}}</strong> FCFA</div>
+            </td>
+            <td class="">
+              <div class="">
+                <div  class="input-group mr-lg-4 ml-lg-4  mr-xl-0 ml-xl-0 mr-md-0 ml-md-0  " >
+                  <a  href="{% url 'increase-qt' item.id %}" class="btn btn-outline-success m-1 btn-sm">
+                    <strong class="h6">&plus;</strong>
+                  </a>
+                  <input type="text" name="" id="" class="form-control m-1 col-lg-4 col-xl-5 col-md-10 col-sm-5 text-center"
+                    value=" {{ item.quantity }} " disabled>
+                  <a href="{% url 'decrease-qt' item.id %}" class="btn btn-outline-warning m-1 btn-sm">
+                    <strong class="h6">&minus;</strong>
+                  </a>
+                </div>
+              </div>
+    </td>
+    <td>
+      <div class="m-3 text-success h5-responsive">
+       <strong> {{item.get_raw_total_item_price}}</strong> FCFA
+      </div>
+    </td>
+    <td>
+      <a href="{% url 'remove-order-item' item.id %}"
+        onclick="return confirm('Voulez-vous vraiment supprimer ce produit de la commande ?')"
+        class="btn btn-danger m-2 btn-sm px-3">
+        <i class="fas fa-times"></i>
+      </a>
+    </td>
+    </tr>
+
+    {% endfor %}
+    {% else %}
+    <h1 class="text-center mt-5"> Oups! <br> Pas de produits dans le panier <i class="fas fa-shopping-cart"></i>.</h1>
+    <h6 class="mb-5 text-center ">
+      Veillez en rajouter et profitez de nos offres de réduction.
+    </h6>
+    {% endif %}
+    </tbody>
+    </table>
+
+  <a href="{% url 'product-list' %}" class="btn btn-outline-danger btn-block ">Continuer mon shopping</a>
+
+  {%  if order_items.count >= 1 %}
+  <div class="ml-lg-auto ml-md-auto ml-xl-auto mt-4 col-lg-5 col-sm-5">
+    <hr>
+    <div class="h1-responsive">Total du panier</div>
+
+    <div class="row mt-2 mb-4">
+      <div class="col-md-6">
+       <span class="text-black ">
+        Sous-total
+       </span>
+      </div>
+      <div class="col-md-6">
+       <div class="float-right ">
+        {{prix_total}} FCFA
+
+       </div>  
+     </div>
+    </div>
+   <div class="row">
+     <div class="col-md-6">
+      <span class="text-black ">
+        Total
+      </span>
+     </div>
+     <div class="col-md-6">
+      <div class="float-right ">
+        {{prix_total}} FCFA
+      </div>  
+    </div>
+   </div>
+   <a href=" {% url 'checkout' %} " class="btn btn-warning btn-block text-black-50">Proceder au paiement</a>
+  </div>
+</div>
+<script type="text/javascript">
+    if( localStorage.getItem('increment') == null){
+        var increment={};
+    }else{
+        increment=JSON.parse(localStorage.getItem('increment'));
+    }
+    
+   $(document).on('click','.increment',function(){
+     //event.preventDefault(); 
+    // var item_id=this.id.toString();
+
+     //alert(item_id);
+   })
+
+</script>
+{% endif %}
+</div>
+  
+
+{% endblock content %}

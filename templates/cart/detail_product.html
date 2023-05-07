@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+Detail d'un produit - Abdallah Market
+{% endblock title %}
+
+
+{% block content %}
+<!--i-->
+<div class=" p-2 container foot">
+    <a href=" {% url 'product-list' %} " class="text-decoration-none text-dark">Accueil</a>
+    <span>/</span>
+    <strong class=""> {{ product.title }} </strong>
+</div>
+
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-8">
+                <div class="card mt-3  shadow-md rouge mb-3" style="background-color: #991332;">
+                    <!-- Card image -->
+                    <div class="view view-cascade overlay">
+        
+                            <img class="card-img-top" width="90" height="400" src="{{ product.image.url }}"
+                                alt="Card image cap">
+        
+                    </div>
+                    <!-- Card content -->
+                    <div class="card-body card-body-cascade" >
+        
+                        <h2 class="font-weight-bold card-title text-white text-uppercase text-center">
+                                {{ product.title }}
+                        </h2>
+                        <!-- Text -->
+                        <p class="card-text text-white text-justify"><strong>{{ product.desc }}</strong></p>
+                        <!-- Button -->
+        
+        
+                    </div>
+                </div>
+        </div>
+        <div class="col-md-4  mt-3">
+            <form action="" method="post" novalidate>
+                {% csrf_token %}
+                <div class="">
+                    {{ form|crispy }}
+                </div>
+                    <button type="submit" class="btn  btn-lg btn-block btn-outline-danger ">
+                        <i class="fas fa-shopping-cart" style="color: #991332;"> Ajouter au panier</i>
+                    </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+  Ouverture de compte
+{% endblock title %}
+{% block content %}
+  <div class="container mt-5 col-lg-4 mx-auto mt-5 bg-white rounded-lg shadow-lg p-4">
+      <form action="" method="post" novalidate>
+          {% csrf_token %}
+          <h4 class="p-3 rouge mb-3 text-center text-white text-uppercase">Ouverture d'un compte</h4>
+          {{form|crispy}}
+          <button type="submit" class="btn btn-success mb-1 btn-block">Créer mon compte </button>
+          <button type="reset" class="btn btn-warning btn-block">Annuler</button>
+
+          <div class="mt-4  text-right text-decoration-none">
+              <span >J'ai dejà mon compte. <a href=" {% url 'login' %} " >Me connecter</a></span>
+          </div>
+      </form>
+  </div>
+{% endblock content %}
