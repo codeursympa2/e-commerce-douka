@@ -1,0 +1,1 @@
+web: gunicorn AbdallahMarket.wsgi --log-file -

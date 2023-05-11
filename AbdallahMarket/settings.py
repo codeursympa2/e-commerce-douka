@@ -23,7 +23,7 @@ SECRET_KEY = 'django-insecure-ldd%@#bd&cy@=47@+48u1lkz&ka+lil#7o)x)ku_g!j#!f13)1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app']
+ALLOWED_HOSTS = ['*']
 
 # Email
 EMAIL_BACKEND= 'django.core.mail.backends.console.EmailBackend'
@@ -131,7 +131,7 @@ USE_THOUSAND_SEPARATOR =True
 #Fichiers static
 STATIC_URL = '/static/'
 STATICFILES_DIRS=[os.path.join(BASE_DIR,"static")]
-#STATIC_ROOT=os.path.join(BASE_DIR,"static_root")
+STATIC_ROOT=os.path.join(BASE_DIR,"staticfiles")
 
 #Les photos disponibilitée
 MEDIA_URL = '/media/'
