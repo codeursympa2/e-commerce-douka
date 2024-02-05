@@ -8,8 +8,9 @@ User=get_user_model()
 
 class AddToCartForm(forms.ModelForm):
                                         #Vidage du champs color
-    colour=forms.ModelChoiceField(queryset=ColourVariation.objects.none())
-    size=forms.ModelChoiceField(queryset=SizeVariation.objects.none())
+    colour=forms.ModelChoiceField(queryset=ColourVariation.objects.none(),label='Couleur')
+    size=forms.ModelChoiceField(queryset=SizeVariation.objects.none(),label='Taille')
+    
     
     class Meta:
         model=OrderItem
@@ -30,23 +31,26 @@ class AddToCartForm(forms.ModelForm):
 class AddressForm(forms.Form):
    
    
-   shipping_address_line_1=forms.CharField(required=False)
-   shipping_address_line_2=forms.CharField(required=False)
-   shipping_zip_code=forms.CharField(required=False)
-   shipping_city=forms.CharField(required=False)
+   shipping_address_line_1=forms.CharField(required=False,label="Adresse de livraison 1")
+   shipping_address_line_2=forms.CharField(required=False,label="Adresse de livraison 2")
+   shipping_zip_code=forms.CharField(required=False,label="Code postal de livraison 1")
+   shipping_city=forms.CharField(required=False,label="Ville de livraison 1")
    
-   billing_address_line_1= forms.CharField(required=False)
-   billing_address_line_2 = forms.CharField(required=False)
-   billing_zip_code = forms.CharField(required=False)
-   billing_city=forms.CharField(required=False)
+   billing_address_line_1= forms.CharField(required=False,label="Adresse de facturation 1")
+   billing_address_line_2 = forms.CharField(required=False,label="Adresse de facturation 2")
+   billing_zip_code = forms.CharField(required=False,label="Code postal de facturation 1")
+   billing_city=forms.CharField(required=False,label="Ville de facturation 2")
    
    #On vide les champs    
    selected_shipping_address=forms.ModelChoiceField(
-       Address.objects.none(),required=False
+       Address.objects.none(),required=False,
+       label="Selectionner une adresse de facturation"
    ) 
       
    selected_billing_address=forms.ModelChoiceField(
-       Address.objects.none(),required=False
+       Address.objects.none(),required=False,
+       label="Selectionner une adresse de livraison"
+       
    )      
    
    def __init__(self, *args, **kwargs):
@@ -72,21 +76,21 @@ class AddressForm(forms.Form):
        selected_shipping_address= data.get('selected_shipping_address',None)
        if selected_shipping_address is None:
            if not data.get('shipping_address_line_1',None):
-               self.add_error('shipping_address_line_1','Please fill in this field')
+               self.add_error('shipping_address_line_1','Ce champs est obligatoire.')
            if not data.get('shipping_address_line_2',None):
-               self.add_error('shipping_address_line_2','Please fill in this field')
+               self.add_error('shipping_address_line_2','Ce champs est obligatoire.')
            if not data.get('shipping_zip_code',None):
-               self.add_error('shipping_zip_code','Please fill in this field')
+               self.add_error('shipping_zip_code','Ce champs est obligatoire.')
            if not data.get('shipping_city',None):
-               self.add_error('shipping_city','Please fill in this field')
+               self.add_error('shipping_city','Ce champs est obligatoire.')
                
        selected_billing_address= data.get('selected_billing_address',None)
        if selected_billing_address is None:
            if not data.get('billing_address_line_1',None):
-               self.add_error('billing_address_line_1','Please fill in this field')
+               self.add_error('billing_address_line_1','Ce champs est obligatoire.')
            if not data.get('billing_address_line_2',None):
-               self.add_error('billing_address_line_2','Please fill in this field')
+               self.add_error('billing_address_line_2','Ce champs est obligatoire.')
            if not data.get('billing_zip_code',None):
-               self.add_error('billing_zip_code','Please fill in this field')
+               self.add_error('billing_zip_code','Ce champs est obligatoire.')
            if not data.get('billing_city',None):
-               self.add_error('billing_city','Please fill in this field')
+               self.add_error('billing_city','Ce champs est obligatoire.')

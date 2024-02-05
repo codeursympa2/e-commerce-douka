@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}
-Payment - Abdallah Supermarket
+Payment - Douka Langou
 {% endblock title %}
 {% block content %}
   <!-- Replace "test" with your own sandbox Business account app client ID -->
@@ -8,7 +8,6 @@ Payment - Abdallah Supermarket
   <script src="https://www.paypal.com/sdk/js?client-id=AV85PZvr690miEKMhEKBEMek7-JTECg2wQDO8J_CaGuGmG-jt6fykkBeO6FqDrWPa9fSa3jdgRvyGver&currency=EUR"></script>
 
   <!-- Set up a container element for the button -->
- 
   <div class="container col-6 mx-auto m-5">
     <div id="paypal-button-container"></div>
   </div>
@@ -21,7 +20,7 @@ Payment - Abdallah Supermarket
               return actions.order.create({
                 purchase_units: [{
                   amount: {
-                    value: '{{order.get_raw_subtotal}}' // Can also reference a variable or functio
+                    value: '{{order.get_raw_subtotal}}', // Can also reference a variable or functio
                   }
                 }]
               });

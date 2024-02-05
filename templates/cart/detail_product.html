@@ -16,26 +16,16 @@ Detail d'un produit - Abdallah Market
 <div class="container mt-3">
     <div class="row">
         <div class="col-md-8">
-                <div class="card mt-3  shadow-md rouge mb-3" style="background-color: #991332;">
-                    <!-- Card image -->
-                    <div class="view view-cascade overlay">
-        
-                            <img class="card-img-top" width="90" height="400" src="{{ product.image.url }}"
+                <div class="">
+                    <img class="card-img-top" width="90" height="400" src="{{ product.image.url }}"
                                 alt="Card image cap">
-        
-                    </div>
-                    <!-- Card content -->
-                    <div class="card-body card-body-cascade" >
-        
-                        <h2 class="font-weight-bold card-title text-white text-uppercase text-center">
-                                {{ product.title }}
-                        </h2>
-                        <!-- Text -->
-                        <p class="card-text text-white text-justify"><strong>{{ product.desc }}</strong></p>
-                        <!-- Button -->
-        
-        
-                    </div>
+                    <h2 class="font-weight-bold card-title text-white text-uppercase text-center">
+                        {{ product.title }}
+                    </h2>
+                    <!-- Text -->
+                    {% autoescape off %}
+                        <p class="card-tex">{{product.desc }}</p>
+                    {% endautoescape %}            
                 </div>
         </div>
         <div class="col-md-4  mt-3">

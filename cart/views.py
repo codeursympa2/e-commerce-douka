@@ -22,7 +22,7 @@ class ProductListView(generic.ListView):
     
     model = Product
     template_name = "cart/product_list.html"
-    paginate_by = 4
+    paginate_by = 8
     
     def get_queryset(self, **kwargs):
         q = self.request.GET.get('q', None)
@@ -111,6 +111,21 @@ class ProductDetailView(generic.FormView):
 
 class CartView(generic.TemplateView):
     template_name = "cart/cart.html"
+    
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            # Vérifie si l'utilisateur est administrateur
+            if  request.user.is_staff:
+                # Obtient l'URL précédente (ou une URL par défaut si aucune n'est disponible)
+                previous_url = request.META.get('HTTP_REFERER', reverse('product-list'))
+                return redirect(previous_url)
+            else:
+                return super().get(request, *args, **kwargs)
+        else:
+            previous_url = "login" 
+            return redirect(previous_url)       
+       
+        
     #get_or_set_order_session(self.request)
     def get_context_data(self, *args, **kwargs):
         context = super(CartView,self).get_context_data(**kwargs)
@@ -165,6 +180,18 @@ class CheckoutView(generic.FormView):
     template_name='cart/checkout.html'
     form_class=AddressForm
   
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            # Vérifie si l'utilisateur est administrateur
+            if  request.user.is_staff:
+                # Obtient l'URL précédente (ou une URL par défaut si aucune n'est disponible)
+                previous_url = request.META.get('HTTP_REFERER', reverse('product-list'))
+                return redirect(previous_url)
+            else:
+                return super().get(request, *args, **kwargs)
+        else:
+            previous_url = "login" 
+            return redirect(previous_url)  
     
     def get_success_url(self):
         return reverse('payment')
@@ -208,7 +235,7 @@ class CheckoutView(generic.FormView):
         # On sauvegarde la commande
         order.save()
             
-        messages.info(self.request,"You have successfully added your addresses")
+        messages.info(self.request,"Vous avez ajouté vos adresses avec succès.")
         return super(CheckoutView, self).form_valid(form)
     
     def get_form_kwargs(self):
@@ -218,11 +245,34 @@ class CheckoutView(generic.FormView):
     
     def get_context_data(self, **kwargs):
         context = super(CheckoutView,self).get_context_data(**kwargs)
-        context["order_items"] = OrderItem.objects.filter(order=get_or_set_order_session(self.request)).order_by('-id')
+        
+        order_items= OrderItem.objects.filter(order=get_or_set_order_session(self.request)).order_by('-id')
+        context["order_items"] = order_items
+        
+        order_price_total=0
+        
+        for order in order_items:
+            order_price_total+=order.get_raw_total_item_price
+        
+        context["order_price_total"] = order_price_total
+
         return context
     
 class PaymentView(generic.TemplateView):
     template_name = "cart/payment.html"
+    
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            # Vérifie si l'utilisateur est administrateur
+            if  request.user.is_staff:
+                # Obtient l'URL précédente (ou une URL par défaut si aucune n'est disponible)
+                previous_url = request.META.get('HTTP_REFERER', reverse('product-list'))
+                return redirect(previous_url)
+            else:
+                return super().get(request, *args, **kwargs)
+        else:
+            previous_url = "login" 
+            return redirect(previous_url)  
     
     def get_context_data(self, **kwargs):
         context=super(PaymentView, self).get_context_data(**kwargs)

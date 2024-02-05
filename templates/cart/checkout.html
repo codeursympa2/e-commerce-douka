@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
-{% block title %}Checkout{% endblock title %}
+{% block title %}Checkout - Douka Langou{% endblock title %}
 
 {% block content %}
 <div class=" p-2 container foot">
@@ -34,7 +34,7 @@
         <div class="row mt-3">
             <div class="col-md-6 mb-md-0">
                 <h2 class="h3  mb-3 text-black text-center">
-                    Billing details
+                    Détails de la facturation
                 </h2>
                 <hr>
                 <div class="p-2 p-lg-2">
@@ -42,7 +42,7 @@
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-success btn-xl py-4 btn-block">
-                        Proced to payment
+                        Proceder au payement
                     </button>
                 </div>
 
@@ -51,19 +51,19 @@
             <div class="col-md-6 ">
                 <div class="row mb-5">
                     <div class="col-md-12">
-                        <h2 class="h3 mb-3 text-black text-center">Your order</h2>
+                        <h2 class="h3 mb-3 text-black text-center">Votre commande</h2>
                         <hr>
                         <div class="p-3 p-lg-3 mt-0">
                             <table class="table table-responsive ">
                                 <thead>
                                     <tr class="text-center text-black-50">
-                                        <th scope="col" class="col-lg-2 col-sm-12 col-md-8">Product</th>
+                                        <th scope="col" class="col-lg-2 col-sm-12 col-md-8">Produit</th>
                                         <th scope="col" class="col-lg-2">Total</th>
                                     </tr>
                                 </thead>
                                 <tbody class="ligne1">
-                                    {% for item in order_items %}
                                     <div class="container">
+                                        {% for item in order_items %}
                                         <tr class="text-center  rouge text-white">
                                             <td>
                                                {{item.size.name}},{{item.colour.name}},{{item.product.title}}
@@ -71,18 +71,18 @@
                                             </td>
                                             <td>
                                                 <div class="m-3  ">
-                                                    <strong> {{item.get_raw_total_item_price}}</strong> FCFA
+                                                    <strong> {{item.get_raw_total_item_price}}</strong> KMF
                                                 </div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
                                                 <strong>
-                                                    Sous total:
+                                                    Prix unitaire:
                                                 </strong>
                                             </td>
                                             <td>
-                                                {{item.get_raw_total_item_price}} FCFA
+                                                {{item.get_prix_unitaire}} KMF
                                             </td>
                                         </tr>
                                         <tr>
@@ -92,17 +92,20 @@
                                                 </strong>
                                             </td>
                                             <td>
-                                                <strong class="text-primary font-weight-bold">
-                                                    {{item.get_raw_total_item_price}} FCFA
+                                                <strong class=" font-weight-bold">
+                                                    {{item.get_raw_total_item_price}} KMF
                                                 </strong>
                                             </td>
                                         </tr>
-                                    </div>
+                                        {% endfor %}
 
-                                    {% endfor %}
+                                    </div>
                        
                         </tbody>
                         </table>
+                        <div class="rouge-bg rounded-pill text-white h2 text-center p-2">
+                            Total: <strong> {{ order_price_total }} KMF</strong>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -65,7 +65,7 @@ class UserAdminChangeForm(forms.ModelForm):
         return self.initial["password"]     
     
 class LoginFormUser(forms.Form):
-   email=forms.EmailField(label='Addresse  email')
+   email=forms.EmailField(label='Adresse  email')
    password = forms.CharField(widget=forms.PasswordInput(),label='Mot de passe') 
    
 class RegisterFormUser(forms.Form):

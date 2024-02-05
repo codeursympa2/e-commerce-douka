@@ -7,6 +7,10 @@ from django.utils.text import slugify
 
 from django.shortcuts import reverse
 
+from ckeditor.fields import RichTextField
+
+from bleach import clean
+
 User=get_user_model()
 
 class Address(models.Model):
@@ -45,7 +49,7 @@ class Product(models.Model):
     
    title = models.CharField(max_length=40)
    slug = models.SlugField(unique=True)
-   desc = models.TextField()
+   desc = RichTextField()
    price= models.IntegerField(default=0)
    image = models.ImageField(upload_to='product_images')
    created = models.DateTimeField(auto_now_add=True)
@@ -81,6 +85,9 @@ class OrderItem(models.Model):
     def get_raw_total_item_price(self):
         return self.quantity * self.product.price
     @property
+    def get_prix_unitaire(self):
+        return self.product.price
+    @property
     def get_total_item_price(self):
         return self.get_row_total_item_price
     
@@ -112,7 +119,9 @@ class Order(models.Model):
         total=0
         for order_item in self.item.all():
             total+=order_item.get_raw_total_item_price
-        return total
+            
+        # Convertir le total en chaîne de caractères avec le format décimal
+        return '{:.2f}'.format(total * 0.0020)
     
     # def get_sub_total(self):
     #     subtotal=self.get_raw_subtotal()

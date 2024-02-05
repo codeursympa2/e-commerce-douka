@@ -18,12 +18,14 @@ def logout_view(request):
 class Login_view(FormView):
     form_class=LoginFormUser
     template_name = 'users/login.html'
+    
    
     def get(self, request):
         if request.user.is_authenticated == True:
             return redirect('product-list')
         else:
-            return super(Login_view(), self).get(request)
+           return super(Login_view, self).get(request)
+           #return super(Login_view, self).form_valid(form)
         
         
     def get_success_url(self):
@@ -34,16 +36,20 @@ class Login_view(FormView):
         password_user=form.cleaned_data.get('password')
 
         user=authenticate(username=email_user,password=password_user)
-        
+
         if user is not None:
             login(self.request,user)
             self.get_success_url()
-            messages.info(self.request,"Connexion reussie.")
+            messages.info(
+                self.request,
+                f"Bienvenue ! {self.request.user.firstname} {self.request.user.lastname}",
+            )
 
         else:    
             messages.error(self.request,"Adresse email ou mot de passe invalid")
             return redirect('login')
         return super(Login_view, self).form_valid(form)
+    
     
 
 class Register_view(FormView):
@@ -56,7 +62,7 @@ class Register_view(FormView):
         if request.user.is_authenticated == True:
             return redirect('product-list')
         else:
-            return super(Register_view(), self).get(request)
+            return super(Register_view, self).get(request)
   
   
   def get_success_url(self):

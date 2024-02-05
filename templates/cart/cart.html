@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-Commande - Abdallah Supermarket
+Commande - Douka Langou
 {% endblock title %}
 
 {% block content %}
@@ -24,7 +24,7 @@ Commande - Abdallah Supermarket
             <th scope="col" class="col-lg-2 col-sm-12 col-md-8">Product</th>
             <th class="col-lg-2" scope="col">Prix</th>
             <th scope="col" class="">Quantité</th>
-            <th scope="col" class="col-lg-2">Totale</th>
+            <th scope="col" class="col-lg-2">Total</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
@@ -38,16 +38,16 @@ Commande - Abdallah Supermarket
             </th>
             <td>
               <h5 class=" text-black-50">{{item.product.title|truncatewords:3}}</h5>
-              <small> Size: {{ item.size }}</small>
-              <small>Colour: {{ item.colour }}</small>
+              <small class="alert alert-secondary p-1">Taille: <strong class="text-success">{{ item.size }}</strong></small> 
+              <small class="alert alert-secondary p-1">Couleur: <strong class="text-success">{{ item.colour }}</strong></small>
             </td>
             <td>
-              <div class="m-3 text-warning h5-responsive"> <strong>{{item.product.get_price}}</strong> FCFA</div>
+              <div class="m-3 text-success h5-responsive"> <strong>{{item.product.get_price}}</strong> KMF</div>
             </td>
             <td class="">
               <div class="">
                 <div  class="input-group mr-lg-4 ml-lg-4  mr-xl-0 ml-xl-0 mr-md-0 ml-md-0  " >
-                  <a  href="{% url 'increase-qt' item.id %}" class="btn btn-outline-success m-1 btn-sm">
+                  <a  href="{% url 'increase-qt' item.id %}" class="btn btn-outline-primary m-1 btn-sm">
                     <strong class="h6">&plus;</strong>
                   </a>
                   <input type="text" name="" id="" class="form-control m-1 col-lg-4 col-xl-5 col-md-10 col-sm-5 text-center"
@@ -60,7 +60,7 @@ Commande - Abdallah Supermarket
     </td>
     <td>
       <div class="m-3 text-success h5-responsive">
-       <strong> {{item.get_raw_total_item_price}}</strong> FCFA
+       <strong> {{item.get_raw_total_item_price}}</strong> KMF
       </div>
     </td>
     <td>
@@ -97,7 +97,7 @@ Commande - Abdallah Supermarket
       </div>
       <div class="col-md-6">
        <div class="float-right ">
-        {{prix_total}} FCFA
+        {{prix_total}} KMF
 
        </div>  
      </div>
@@ -110,7 +110,7 @@ Commande - Abdallah Supermarket
      </div>
      <div class="col-md-6">
       <div class="float-right ">
-        {{prix_total}} FCFA
+        {{prix_total}} KMF
       </div>  
     </div>
    </div>
