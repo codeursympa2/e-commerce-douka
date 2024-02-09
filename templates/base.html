@@ -48,6 +48,7 @@
         min-height: 100vh;
         display: flex;
         flex-direction: column;
+        background-color: #f8f9fa;
       }
   
       main {
@@ -68,8 +69,8 @@
         <!-- Collapsible wrapper -->
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Navbar brand -->
-            <a class="navbar-brand mt-2 mt-lg-0 rouge-bg pt-1 pb-1 pr-3 pl-3 text-white rounded-pill text-uppercase h3 " href="{% url 'product-list' %}">
-                <i class="fas fa-cart"> </i>DOUKA LANGOU
+            <a style="font-family: chiller;"  class="navbar-brand mt-2 mt-lg-0 rouge-bg pt-1 pb-1 pr-3 pl-3 text-white rounded-pill text-uppercase h3 " href="{% url 'home' %}">
+                DOUKA LANGOU
             </a>
 
 
@@ -80,7 +81,7 @@
             
             {% if request.user.is_staff %}
             <a class="text-reset m-1 me-3  hidden-arrow" href="{% url 'admin:index' %} " id="navbarDropdownMenuLink" >
-                <i class="fas fa-user"></i> administration 
+                <i class="fas fa-user"></i> Administration 
             </a>|
             {% endif %}
                 
@@ -126,11 +127,11 @@
         <div class="collapse navbar-collapse justify-content-center" id="navbarCenteredExample">
             <!-- Left links -->
             <ul class="navbar-nav mb-2 mb-lg-0 text-white">
-              <!--  <li class="nav-item">
-                    <a class="nav-link active text-white" aria-current="page" href=" {% url 'home' %} ">Home</a>
-                </li> -->
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'product-list' %}">Accueil</a>
+                    <a class="nav-link active text-white" aria-current="page" href=" {% url 'home' %} ">Accueil</a>
+                </li> 
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'product-list' %}">Boutique</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link  text-white" href=" {% url 'contact' %} ">Contact</a>
@@ -165,7 +166,7 @@
 
     {% if messages %}
     {% for message in messages %}
-    <div {% if message.tags %} class="mt-3 alert alert-{{ message.tags }} p-3 h4 text-center h3 p-1  mx-auto col-6 rounded-3" {% endif %}>{{ message }}</div>
+    <div {% if message.tags %} class="mt-3 alert alert-{{ message.tags }} p-2 h5-responsive text-center h3 p-1  mx-auto col-5 rounded-3" {% endif %}>{{ message }}</div>
     {% endfor %}
     {% endif %}
     <!--/.Navbar-->

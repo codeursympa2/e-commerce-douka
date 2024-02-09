@@ -10,18 +10,20 @@ Liste des produits - Douka Langou
     <a href=" {% url 'product-list' %} " class="text-decoration-none text-dark">Accueil</a>
 </div>
 
-<div class="container mt-4 ">
+<div class="container mt-4">
     <form action=" {% url 'product-list' %} " method="GET">
-    <div class="m-3 col-lg-5 mx-auto d-flex">
-            <input type="search" name="q" id="q" placeholder="Ex: Pantalon" value="{% if search != '' %}{{ search }}{% endif %}" class="form-control mt-1">
-            <button type="submit" class="btn btn-success col-4 btn-sm"> Rechercher</button>
+       
+    <div class=" d-flex mt-3 mb-3">
+        <input type="search"  name="q" id="q" placeholder="Ex: Joho" value="{% if search != '' %}{{ search }}{% endif %}" class="form-control mt-1" required>
+        <button type="submit" class="btn btn-outline-success btn-rounded btn-sm col-2"> Rechercher</button>
+
     </div>
     </form>
     <div class="row">
         
         {% if object_list.count >= 1 %}
             {% for product in products %}
-            <div class="col-12 col-md-6 col-lg-8 col-xl-3">
+            <div class="col-4">
                 {% include 'cart/partials/product_item.html' %}
             {% endfor %}
         {% else %}

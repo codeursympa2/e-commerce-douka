@@ -3,13 +3,24 @@ from django.views import generic
 from .forms import *
 from django.contrib import  messages
 from django.conf import settings
-
+from cart.models import Product
 #
 from django.core.mail import send_mail
 
 
 class HomeView(generic.TemplateView):
     template_name='index.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        # Récupérer les trois derniers produits
+        latest_products = Product.objects.order_by('-id')[:3]
+        
+        # Ajouter les produits au contexte
+        context['latest_products'] = latest_products
+        
+        return context
 
 class ContactView(generic.FormView):
     template_name='contact.html'

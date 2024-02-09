@@ -5,47 +5,68 @@ Payment - Douka Langou
 {% block content %}
   <!-- Replace "test" with your own sandbox Business account app client ID -->
 
+  <style>
+   
+  </style>
   <script src="https://www.paypal.com/sdk/js?client-id=AV85PZvr690miEKMhEKBEMek7-JTECg2wQDO8J_CaGuGmG-jt6fykkBeO6FqDrWPa9fSa3jdgRvyGver&currency=EUR"></script>
 
   <!-- Set up a container element for the button -->
-  <div class="container col-6 mx-auto m-5">
-    <div id="paypal-button-container"></div>
+  <body>
+    <div class="container">
+      <div class=" p-2 container foot">
+        <a href=" {% url 'product-list' %} " class="text-decoration-none text-dark">Accueil</a>
+        <span>/</span>
+        <a href=" {% url 'cart' %} " class="text-decoration-none text-dark">Cart</a>
+        <span>/</span>
+        <a href=" {% url 'checkout' %} " class="text-decoration-none text-dark">Checkout</a>
+        <span>/</span>
+        <strong class="">Paiement</strong>
+      </div>
+    <div class="mx-auto mt-4 col-6">
+      <div class="rouge-bg p-2 mb-2 h4-responsive rounded-sm text-white text-center">Méthodes de paiement</div>
+      <div class=" bg-white accent-1 shadow-lg p-3  mx-auto ">
+        <div id="paypal-button-container"></div>
+      </div>
+    </div>
   </div>
+  </body>
   {% block scripts %}
   <script>
     paypal.Buttons(
-        {
-            // Sets up the transaction when a payment button is clicked
-            createOrder: (data, actions) => {
-              return actions.order.create({
+    {
+        createOrder: (data, actions) => {
+            return actions.order.create({
                 purchase_units: [{
-                  amount: {
-                    value: '{{order.get_raw_subtotal}}', // Can also reference a variable or functio
-                  }
-                }]
-              });
-            },
-             // Finalize the transaction after payer approval
+                    amount: {
+                        value: '{{order.get_raw_subtotal}}',
+                    },
+                    shipping: { // Adresse de livraison
+                        name: {
+                            full_name: '{{order.billing_address.user.lastname}} {{order.shipping_address.user.firstname}}',
+                        },
+                       
+                    },
+                    billing: { // Adresse de livraison
+                        name: {
+                            full_name: '{{order.billing_address.user.lastname}} {{order.shipping_address.user.firstname}}',
+                        },
+                       
+                    },
+                    
+                }],
+            });
+        },
         onApprove: (data, actions) => {
             return actions.order.capture().then(function(orderData) {
-              // Successful capture! For dev/demo purposes:
-              console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-              const transaction = orderData.purchase_units[0].payments.captures[0];
-              alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
-  
-              // When ready to go live, remove the alert and show a success message within this page. For example:
-  
-              // const element = document.getElementById('paypal-button-container');
-  
-              // element.innerHTML = '<h3>Thank you for your payment!</h3>';
-  
-              // Or go to another URL:  actions.redirect('thank_you.html');
-  
+                console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                const transaction = orderData.purchase_units[0].payments.captures[0];
+                alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
             });
-  
-          }
         }
-    ).render('#paypal-button-container');
+    }
+).render('#paypal-button-container');
+
+
   </script>
   {% endblock scripts %}
 {% endblock content %}

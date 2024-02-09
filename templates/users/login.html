@@ -5,7 +5,7 @@
 {% endblock title %}
 {% block content %}
     
-    <div class="mx-auto col-lg-4 mt-2">
+    <div class="mx-auto col-lg-5 mt-2">
       <div class="card form-bg">
         <div class="card-header  card-block">
             <form action="" method="post" novalidate> 
@@ -13,6 +13,7 @@
               <hr>
                 <div class="card-body">
                   {% csrf_token %}
+                  <!-- Material input -->
                   {{form|crispy}}
                 </div>
                 <div class="card-footer">

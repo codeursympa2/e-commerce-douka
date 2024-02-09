@@ -10,6 +10,6 @@ urlpatterns=[
     path("decrease-quantity/<pk>", DecreaseQuantityView.as_view(), name="decrease-qt"),
     path("<pk>/delete", RemoveFromCartView.as_view(), name="remove-order-item"),
     path("checkout/", CheckoutView.as_view(), name="checkout"),
-    path("payment/", PaymentView.as_view(), name="payment"),
+    path("checkout/payment/", PaymentView.as_view(), name="payment"),
     
 ]

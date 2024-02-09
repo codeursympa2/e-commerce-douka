@@ -22,7 +22,7 @@ class ProductListView(generic.ListView):
     
     model = Product
     template_name = "cart/product_list.html"
-    paginate_by = 8
+    paginate_by = 6
     
     def get_queryset(self, **kwargs):
         q = self.request.GET.get('q', None)

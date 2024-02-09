@@ -1,22 +1,22 @@
     {% load crispy_forms_tags %}
-    <div class="card shadow-md rouge mb-3" style="background-color: #991332;">
+    <div class="card shadow-md rouge mb-5" style="background-color: #f1f1f1;">
         <!-- Card image -->
         <div class="view view-cascade overlay">
 
             <a href="{{ product.get_absolute_url }}">
-                <img class="card-img-top" width="90" height="200" src="{{ product.image.url }}" alt="Card image cap">
+                <img class="card-img-top" width="90" height="230" src="{{ product.image.url }}" alt="Card image cap">
             </a>
            
         </div>
         <!-- Card content -->
-        <div class="card-body card-body-cascade" style="height:160px">
+        <div class="card-body card-body-cascade" >
 
-            <h4 class="font-weight-bold card-title ">
-                <a href="{{ product.get_absolute_url }}" class="text-white">
-                    {{ product.title|truncatewords:1 }}
+            <h4 class="font-weight-bold card-title text-center">
+                <a href="{{ product.get_absolute_url }}" class="text-decoration-none " style="color: black;">
+                    {{ product.title|truncatewords:2 }}
                 </a>
             </h4>
-            <div class="float-right mt-5  text-warning h3-responsive">
+            <div class="float-right mt-1 bg-dark text-white pt-1 pb-1 pr-2 pl-2  rounded-sm h4-responsive">
                 {{product.price}} KMF
             </div>
             <!-- 
